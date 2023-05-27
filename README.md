@@ -1,6 +1,7 @@
 # Compilador-SSPTDL2
-El programa realiza un análisis léxico y es capaz de distinguit identificadores, operadores, signos de puntuación y operadores desde un archivo de texto.  
-En la siguiente imagen podemos ver las dos cadenas que se dan como entrada desde el archivo de texto.  
+El programa realiza un análisis léxico y es capaz de distinguir un total de 24 símbolos léxicos, que podemos ver a continuación.
+![Image text](https://github.com/JOrtegaM230/Compilador-SSPTDL2/blob/main/img/tokens.png) 
+En la siguiente imagen podemos ver la entrada que recibe el programa como código fuente, el cual será sometido a un análisis léxico.  
 ![Image text](https://github.com/JOrtegaM230/Compilador-SSPTDL2/blob/main/img/entrada.png)  
-A continuación se pueden ver los datos de salida dados por el análisis léxico.  
+A continuación se pueden ver los datos de salida dados por el analizador léxico.  
 ![Image text](https://github.com/JOrtegaM230/Compilador-SSPTDL2/blob/main/img/salida.png)
