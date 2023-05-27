@@ -1,42 +1,65 @@
 import re
 
-file = open("read.txt")
+# Definir las expresiones regulares para los tokens
+tokens = [
+    ('real', 2, r'\d+\.\d+'),              # Números reales
+    ('entero', 1, r'\d+'),                 # Números enteros (con parte decimal opcional)
+    (';', 12, r';'),                       # Punto y coma
+    (',', 13, r','),                       # Coma
+    ('if', 19, r'if'),                     # Palabra reservada if
+    ('while', 20, r'while'),               # Palabra reservada while
+    ('return', 21, r'return'),             # Palabra reservada return
+    ('else', 22, r'else'),                 # Palabra reservada else
+    ('tipo', 4, r'(int|float|void)'),      # Tipos (int, float, void)
+    ('identificador', 0, r'\w+'),          # Identificadores (letras y números)
+    ('cadena', 3, r'[a-zA-Z]+'),           # Cadenas (letras)
+    ('opSuma', 5, r'[+\-]'),               # Operadores de suma y resta
+    ('opMul', 6, r'[*/]'),                 # Operadores de multiplicación y división
+    ('opRelac', 7, r'[<>]=?'),             # Operadores de relación
+    ('opOr', 8, r'\|\|'),                  # Operador lógico OR
+    ('opAnd', 9, r'\&\&'),                 # Operador lógico AND
+    ('opIgualdad', 11, r'==|!='),          # Operadores de igualdad
+    ('opNot', 10, r'!'),                   # Operador de negación
+    ('(', 14, r'\('),                      # Paréntesis izquierdo
+    (')', 15, r'\)'),                      # Paréntesis derecho
+    ('{', 16, r'\{'),                      # Llave izquierda
+    ('}', 17, r'\}'),                      # Llave derecha
+    ('=', 18, r'='),                       # Asignación
+    ('$', 23, r'\$'),                      # Símbolo $ 
+    ('ESPACIO', "NA", r'\s+'),             # Espacios en blanco (saltos de línea, espacios, tabulaciones, etc.)
+]
+# Función para analizar el código fuente
+def analizar_codigo_fuente(codigo):
+    # Lista para almacenar los tokens encontrados
+    resultado = []
+    # Iterar sobre el código fuente
+    while codigo:
+        # Bandera para indicar si se encontró un token válido
+        emparejado = False
+        # Iterar sobre las expresiones regulares de los tokens
+        for token_nombre, token_tipo, patron in tokens:
+            # Intentar hacer coincidir el patrón con el código fuente
+            coincidencia = re.match(patron, codigo)
+            # Si se encontró un token válido
+            if coincidencia:
+                # Obtener el valor del token
+                valor = coincidencia.group(0)
+                # Agregar el token y su valor al resultado
+                resultado.append((token_nombre, token_tipo, valor))
+                # Actualizar el código fuente eliminando el token encontrado
+                codigo = codigo[len(valor):]
+                # Marcar la bandera como True
+                emparejado = True              
+                # Salir del bucle interno
+                break       
+        # Si no se encontró un token válido, lanzar un error
+        if not emparejado:
+            raise ValueError('Token no válido: ' + codigo)    
+    return resultado
 
-operators = {'=' : 'Assignment op','+' : 'Addition op','-' : 'Subtraction op','/' : 'Division op','*' : 'Multiplication op','<' : 'Lessthan op','>' : 'Greaterthan op' }
-operators_key = operators.keys()
+codigo_fuente = 'if (8==9){return 9-2;}'
 
-data_type = {'int' : 'integer type', 'float': 'Floating point' , 'char' : 'Character type', 'long' : 'long int' }
-data_type_key = data_type.keys()
+tokens_encontrados = analizar_codigo_fuente(codigo_fuente)
 
-punctuation_symbol = { ':' : 'colon', ';' : 'semi-colon', '.' : 'dot' , ',' : 'comma' }
-punctuation_symbol_key = punctuation_symbol.keys()
-
-identifier = { 'a' : 'id', 'b' : 'id', 'c' : 'id' , 'd' : 'id' }
-identifier_key = identifier.keys()
-
-dataFlag = False
-
-a=file.read()
-
-count=0
-program = a.split("\n")
-for line in program:
-    count = count + 1
-    print("line#" , count, "\n" , line)
-
-    tokens=line.split(' ')
-    print("Tokens are " , tokens)
-    print("Line#", count, "properties \n")
-    for token in tokens:
-        if token in operators_key:
-            print("operator is ", operators[token])
-        if token in data_type_key:
-            print("datatype is", data_type[token])
-        if token in punctuation_symbol_key:
-            print (token, "Punctuation symbol is" , punctuation_symbol[token])
-        if token in identifier_key:
-            print (token, "Identifier is" , identifier[token])
-
-           
-    dataFlag=False
-    print("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _  _") 
+for token_nombre, token_tipo, valor in tokens_encontrados:
+    print(f'Token: {token_nombre}, Tipo: {token_tipo}, Valor: {valor}')
