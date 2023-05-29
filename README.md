@@ -14,3 +14,4 @@ Posteriormente el analizador sintáctico va imprimiendo el estado en el que se e
 ![Image text](https://github.com/JOrtegaM230/Compilador-SSPTDL2/blob/main/img/salida2.png)
 Y por último, se muestra el resultado final del árbol sintáctico que se produjo con la entrada.
 ![Image text](https://github.com/JOrtegaM230/Compilador-SSPTDL2/blob/main/img/salida3.png)
+Para el análisis semántico, por el momento solo se añade a la tabla de símbolos el tipo de la variable y el nombre, falta realizar otras validaciones.

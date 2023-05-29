@@ -57,9 +57,3 @@ def analizar_codigo_fuente(codigo):
             raise ValueError('Token no válido: ' + codigo)    
     return resultado
 
-codigo_fuente = 'if (8==9){return 9-2;}'
-
-tokens_encontrados = analizar_codigo_fuente(codigo_fuente)
-
-for token_nombre, token_tipo, valor in tokens_encontrados:
-    print(f'Token: {token_nombre}, Tipo: {token_tipo}, Valor: {valor}')

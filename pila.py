@@ -41,6 +41,18 @@ class Pila:
             nombre = ""
             nombre = nombre + self.items[len(self.items)-2].valorE
 
+    def mostrarNoest(self):
+        if len(self.items) > 0:
+            valores = []
+            for i in self.items:
+                if i.tipoE != "ESTADO":
+                    valores.append(i.valorE)
+                else:
+                    pass
+            return valores
+        else:
+            return None
+
     def mostrarNoestados(self):
         if len(self.items) > 0:
             valores = []
